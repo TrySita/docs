@@ -1,0 +1,62 @@
+---
+title: "Gemini CLI MCP Setup"
+description: "Configure the Sita MCP server in Gemini CLI for intelligent codebase Q&A"
+icon: "sparkles"
+---
+
+## Setup
+
+### Single Repository
+
+Run this command to add the Sita MCP server:
+
+```bash
+gemini mcp add \
+  --transport sse \
+  code-qna \
+  https://tools.trysita.com/sse \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "x-repo-id: YOUR_REPO_ID"
+```
+
+### Multiple Repositories
+
+Add each repository with a unique name:
+
+```bash
+# Frontend repository
+gemini mcp add \
+  --transport sse \
+  frontend-qna \
+  https://tools.trysita.com/sse \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "x-repo-id: frontend"
+
+# Backend repository
+gemini mcp add \
+  --transport sse \
+  backend-qna \
+  https://tools.trysita.com/sse \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "x-repo-id: backend"
+
+# Mobile repository
+gemini mcp add \
+  --transport sse \
+  mobile-qna \
+  https://tools.trysita.com/sse \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "x-repo-id: mobile"
+```
+
+## Verification
+
+After adding the configuration:
+- Run `gemini mcp list` to see your configured servers
+- The `codebase.qna` tool will be available in Gemini CLI
+
+## Management Commands
+
+- **List servers**: `gemini mcp list`
+- **Remove a server**: `gemini mcp remove code-qna`
+- **View server details**: `gemini mcp info code-qna`

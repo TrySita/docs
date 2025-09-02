@@ -1,0 +1,139 @@
+---
+title: "Cursor MCP Setup"
+description: "Configure the Sita MCP server in Cursor for intelligent codebase Q&A"
+icon: "arrow-pointer"
+---
+
+This guide shows you how to configure the Sita MCP server in Cursor, the AI-powered code editor.
+
+<Warning>
+  You must configure the MCP server for **each repository** you want to work
+  with. Each repository requires its own configuration section with a unique
+  repo ID.
+</Warning>
+
+## Configuration Steps
+
+<Steps>
+<Step title="Open Settings">
+  In Cursor, click the Settings icon in the top right corner of the application.
+</Step>
+
+<Step title="Navigate to MCP">
+  Click on "MCP & Integrations" in the settings menu.
+</Step>
+
+<Step title="Add New Server">
+  Click the "New MCP Server" button to add a custom MCP server.
+</Step>
+
+<Step title="Paste Configuration">
+  Copy and paste the appropriate configuration based on whether you're setting
+  up one repository or multiple repositories (see examples below).
+</Step>
+
+<Step title="Save">
+  Save the configuration. The MCP server will be immediately available in Cursor.
+</Step>
+</Steps>
+
+## Single Repository Configuration
+
+To configure Sita for a single repository, paste this configuration:
+
+```json
+{
+  "mcpServers": {
+    "code-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: YOUR_REPO_ID"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+<Note>
+  Replace `YOUR_API_KEY` with your actual Sita API key and `YOUR_REPO_ID` with
+  your repository identifier.
+</Note>
+
+## Multiple Repository Configuration
+
+To configure multiple repositories, add separate server entries for each:
+
+```json
+{
+  "mcpServers": {
+    "frontend-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: frontend-app"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    },
+    "backend-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: backend-api"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    },
+    "mobile-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: mobile-app"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+<Tip>
+  Give each server configuration a descriptive name (like `frontend-qna`,
+  `backend-qna`) to easily identify which repository it connects to.
+</Tip>
+
+## Verification
+
+After adding the configuration, you should see:
+
+- Your server name(s) appear in the MCP & Integrations panel
+- A green indicator showing the server is connected
+- The `codebase.qna` tool available when using Cursor's AI features
+
+## Next Steps
+
+- Set up MCP in [Claude Code](/ai-tools/mcp-claude-code) for CLI integration
+- Configure [Cline](/ai-tools/mcp-cline) with MCP support

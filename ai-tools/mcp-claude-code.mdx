@@ -1,0 +1,70 @@
+---
+title: "Claude Code MCP Setup"
+description: "Configure the Sita MCP server in Claude Code for intelligent codebase Q&A"
+icon: "asterisk"
+---
+
+This guide shows you how to configure the Sita MCP server in Claude Code, Anthropic's official CLI.
+
+<Warning>
+  You must configure the MCP server for **each repository** you want to work
+  with. Each repository requires its own configuration with a unique repo ID.
+</Warning>
+
+## Configuration Command
+
+Run this command in your terminal to add the Sita MCP server:
+
+```bash
+claude mcp add \
+  --transport http \
+  code-qna \
+  https://tools.trysita.com/mcp \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "x-repo-id: YOUR_REPO_ID"
+```
+
+<Note>
+  Replace `YOUR_API_KEY` with your actual Sita API key and `YOUR_REPO_ID` with
+  your repository identifier.
+</Note>
+
+## Multiple Repository Setup
+
+To add multiple repositories, run the command for each with different names and repo IDs:
+
+```bash
+# Frontend repository
+claude mcp add \
+  --transport http \
+  frontend-qna \
+  https://tools.trysita.com/mcp \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "x-repo-id: frontend-app"
+
+# Backend repository
+claude mcp add \
+  --transport http \
+  backend-qna \
+  https://tools.trysita.com/mcp \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "x-repo-id: backend-api"
+```
+
+## Verification
+
+After adding the configuration:
+
+- Run `claude mcp list` to see your configured servers
+- The `codebase.qna` tool will be available in Claude Code
+
+## Management Commands
+
+- **List servers**: `claude mcp list`
+- **Remove a server**: `claude mcp remove code-qna`
+- **View server details**: `claude mcp show code-qna`
+
+## Next Steps
+
+- Configure [Cursor](/ai-tools/mcp-cursor) with MCP support
+- Try [Cline](/ai-tools/mcp-cline) for VSCode integration
