@@ -1,0 +1,142 @@
+---
+title: "Cline MCP Setup"
+description: "Configure the Sita MCP server in Cline (VSCode extension) for intelligent codebase Q&A"
+icon: "code"
+---
+
+This guide shows you how to configure the Sita MCP server in Cline, the powerful VSCode extension for AI-assisted coding.
+
+<Warning>
+  You must configure the MCP server for **each repository** you want to work
+  with. Each repository requires its own configuration section with a unique
+  repo ID.
+</Warning>
+
+## Configuration Steps
+
+<Steps>
+<Step title="Open MCP Settings">
+  In VSCode with Cline installed, look at the top right corner of the Cline interface. You'll see the MCP icon - it looks like 3 stacked layers. Click on this icon to open the MCP servers panel.
+</Step>
+
+<Step title="Access Installed Servers">
+  Once the MCP panel opens, click on the "Installed" tab. This shows all
+  currently configured MCP servers.
+</Step>
+
+<Step title="Configure MCP Servers">
+  Click the "Configure MCP Servers" button. This opens the
+  `cline_mcp_settings.json` file in your editor where you can add the Sita
+  configuration.
+</Step>
+
+<Step title="Add Configuration">
+  Add the appropriate configuration based on whether you're setting up one
+  repository or multiple repositories (see examples below).
+</Step>
+
+<Step title="Save and Reload">
+  Save the configuration file. The MCP server will automatically reload with your new settings.
+</Step>
+</Steps>
+
+## Single Repository Configuration
+
+To configure Sita for a single repository, add this to your `cline_mcp_settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "code-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: YOUR_REPO_ID"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+<Note>
+  Replace `YOUR_API_KEY` with your actual Sita API key and `YOUR_REPO_ID` with
+  your repository identifier.
+</Note>
+
+## Multiple Repository Configuration
+
+To configure multiple repositories, add separate server entries for each:
+
+```json
+{
+  "mcpServers": {
+    "frontend-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: frontend-app"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    },
+    "backend-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: backend-api"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    },
+    "mobile-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: mobile-app"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+<Tip>
+  Give each server configuration a descriptive name (like `frontend-qna`,
+  `backend-qna`) to easily identify which repository it connects to.
+</Tip>
+
+## Verification
+
+After adding the configuration and saving the file, you should see:
+
+- Your server name(s) appear in the MCP panel's "Installed" tab
+- A green indicator showing the server is connected
+- The `codebase.qna` tool available when using Cline
+
+## Next Steps
+
+- Set up MCP in [Claude Code](/ai-tools/mcp-claude-code) for CLI integration
+- Configure [Cursor](/ai-tools/mcp-cursor) with MCP support

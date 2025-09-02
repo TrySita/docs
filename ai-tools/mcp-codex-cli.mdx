@@ -1,0 +1,179 @@
+---
+title: "Codex CLI MCP Setup"
+description: "Configure the Sita MCP server in Codex CLI for intelligent codebase Q&A"
+icon: "book"
+---
+
+This guide shows you how to configure the Sita MCP server in Codex CLI to enable powerful codebase Q&A capabilities.
+
+<Warning>
+  You must configure the MCP server for **each repository** you want to work
+  with. Each repository requires its own configuration section with a unique
+  repo ID.
+</Warning>
+
+<Note>
+  **Important**: Codex CLI uses `mcp_servers` (with underscore) as the top-level
+  key, not `mcpServers` like JSON-based tools.
+</Note>
+
+## Configuration Steps
+
+<Steps>
+<Step title="Locate Configuration File">
+  Open the Codex CLI configuration file located at:
+  ```
+  ~/.codex/config.toml
+  ```
+  Create this file if it doesn't exist.
+</Step>
+
+<Step title="Add MCP Server Configuration">
+  Add an `mcp_servers` section to your TOML configuration file.
+</Step>
+
+<Step title="Configure Sita Server">
+  Add the Sita MCP server configuration using TOML format (see examples below).
+</Step>
+
+<Step title="Save and Restart">
+  Save the configuration file. The MCP server will be available next time you use Codex CLI.
+</Step>
+</Steps>
+
+## Single Repository Configuration
+
+To configure Sita for a single repository, add this to your `~/.codex/config.toml`:
+
+```toml
+# IMPORTANT: Use mcp_servers (with underscore), not mcpServers
+[mcp_servers.sita-qna]
+command = "npx"
+args = [
+  "-y",
+  "mcp-remote",
+  "https://tools.trysita.com/sse",
+  "--header",
+  "Authorization: Bearer YOUR_API_KEY",
+  "--header",
+  "x-repo-id: YOUR_REPO_ID"
+]
+env = { "NODE_ENV" = "production" }
+```
+
+<Note>
+  Replace `YOUR_API_KEY` with your actual Sita API key and `YOUR_REPO_ID` with
+  your repository identifier.
+</Note>
+
+## Multiple Repository Configuration
+
+To configure multiple repositories, add separate server entries for each:
+
+```toml
+[mcp_servers.frontend-qna]
+command = "npx"
+args = [
+  "-y",
+  "mcp-remote",
+  "https://tools.trysita.com/sse",
+  "--header",
+  "Authorization: Bearer YOUR_API_KEY",
+  "--header",
+  "x-repo-id: frontend-app"
+]
+
+[mcp_servers.backend-qna]
+command = "npx"
+args = [
+  "-y",
+  "mcp-remote",
+  "https://tools.trysita.com/sse",
+  "--header",
+  "Authorization: Bearer YOUR_API_KEY",
+  "--header",
+  "x-repo-id: backend-api"
+]
+
+[mcp_servers.mobile-qna]
+command = "npx"
+args = [
+  "-y",
+  "mcp-remote",
+  "https://tools.trysita.com/sse",
+  "--header",
+  "Authorization: Bearer YOUR_API_KEY",
+  "--header",
+  "x-repo-id: mobile-app"
+]
+```
+
+<Tip>
+  Give each server configuration a descriptive name (like `frontend-qna`,
+  `backend-qna`) to easily identify which repository it connects to.
+</Tip>
+
+## Using Environment Variables
+
+For better security, you can use environment variables with the env field:
+
+```toml
+[mcp_servers.sita-qna]
+command = "npx"
+args = [
+  "-y",
+  "mcp-remote",
+  "https://tools.trysita.com/sse",
+  "--header",
+  "Authorization: Bearer ${SITA_API_KEY}",
+  "--header",
+  "x-repo-id: ${REPO_ID}"
+]
+env = { "SITA_API_KEY" = "your_api_key_here", "REPO_ID" = "your_repo_id" }
+```
+
+## Create Configuration via Command Line
+
+You can create the configuration file with this command:
+
+```bash
+mkdir -p ~/.codex && cat > ~/.codex/config.toml << 'EOF'
+[mcp_servers.sita-qna]
+command = "npx"
+args = [
+  "-y",
+  "mcp-remote",
+  "https://tools.trysita.com/sse",
+  "--header",
+  "Authorization: Bearer YOUR_API_KEY",
+  "--header",
+  "x-repo-id: YOUR_REPO_ID"
+]
+EOF
+```
+
+Then edit the file to add your actual API key and repository ID:
+
+```bash
+nano ~/.codex/config.toml
+```
+
+## Verification
+
+After adding the configuration:
+
+1. Save the `~/.codex/config.toml` file
+2. Run Codex CLI with a query about your codebase
+3. The MCP server tools should be available for use
+
+<Warning>
+  If you encounter a "string does not match pattern" error, it may indicate a
+  compatibility issue between the MCP server's tool naming convention and Codex
+  CLI's validation rules. Contact support if this occurs.
+</Warning>
+
+## Next Steps
+
+- Set up MCP in [Claude Code](/ai-tools/mcp-claude-code) for CLI integration
+- Configure [Cursor](/ai-tools/mcp-cursor) with MCP support
+- Try [Cline](/ai-tools/mcp-cline) for VSCode integration

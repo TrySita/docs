@@ -1,0 +1,136 @@
+---
+title: "Kilo Code MCP Setup"
+description: "Configure the Sita MCP server in Kilo Code for intelligent codebase Q&A"
+icon: "bolt"
+---
+
+This guide shows you how to configure the Sita MCP server in Kilo Code for powerful codebase Q&A capabilities.
+
+<Warning>
+  You must configure the MCP server for **each repository** you want to work
+  with. Each repository requires its own configuration section with a unique
+  repo ID.
+</Warning>
+
+## Configuration Steps
+
+<Steps>
+<Step title="Open MCP Settings">
+  In Kilo Code, click the three stacks icon (MCP icon) in the interface.
+</Step>
+
+<Step title="Edit Global MCP">
+  Click "Edit Global MCP" to open the configuration file.
+</Step>
+
+<Step title="Paste Configuration">
+  Copy and paste the appropriate configuration based on whether you're setting
+  up one repository or multiple repositories (see examples below).
+</Step>
+
+<Step title="Save">
+  Save the configuration file. The MCP server will be immediately available in Kilo Code.
+</Step>
+</Steps>
+
+## Single Repository Configuration
+
+To configure Sita for a single repository, paste this configuration:
+
+```json
+{
+  "mcpServers": {
+    "code-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: YOUR_REPO_ID"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+<Note>
+  Replace `YOUR_API_KEY` with your actual Sita API key and `YOUR_REPO_ID` with
+  your repository identifier.
+</Note>
+
+## Multiple Repository Configuration
+
+To configure multiple repositories, add separate server entries for each:
+
+```json
+{
+  "mcpServers": {
+    "frontend-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: frontend-app"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    },
+    "backend-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: backend-api"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    },
+    "mobile-qna": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://tools.trysita.com/sse",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}",
+        "--header",
+        "x-repo-id: mobile-app"
+      ],
+      "env": {
+        "AUTH_TOKEN": "YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+<Tip>
+  Give each server configuration a descriptive name (like `frontend-qna`,
+  `backend-qna`) to easily identify which repository it connects to.
+</Tip>
+
+## Verification
+
+After adding the configuration:
+
+- Your server name(s) should appear in the MCP panel
+- You should see a green indicator showing the server is connected
+- The `codebase.qna` tool will be available when using Kilo Code's AI features
+
+## Next Steps
+
+- Set up MCP in [Claude Code](/ai-tools/mcp-claude-code) for CLI integration
+- Configure [Cursor](/ai-tools/mcp-cursor) with MCP support
+- Try [Cline](/ai-tools/mcp-cline) for VSCode integration
