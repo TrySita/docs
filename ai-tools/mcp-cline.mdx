@@ -51,23 +51,18 @@ To configure Sita for a single repository, add this to your `cline_mcp_settings.
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://tools.trysita.com/sse",
-        "--header",
-        "Authorization: Bearer ${AUTH_TOKEN}",
+        "http://localhost:3000/api/mcp",
         "--header",
         "x-repo-id: YOUR_REPO_ID"
-      ],
-      "env": {
-        "AUTH_TOKEN": "YOUR_API_KEY"
-      }
+      ]
     }
   }
 }
 ```
 
 <Note>
-  Replace `YOUR_API_KEY` with your actual Sita API key and `YOUR_REPO_ID` with
-  your repository identifier.
+  Replace `YOUR_REPO_ID` with your repository ID. The repo id can be copied
+  from the codebases.
 </Note>
 
 ## Multiple Repository Configuration
@@ -81,43 +76,28 @@ To configure multiple repositories, add separate server entries for each:
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://tools.trysita.com/sse",
-        "--header",
-        "Authorization: Bearer ${AUTH_TOKEN}",
+        "http://localhost:3000/api/mcp",
         "--header",
         "x-repo-id: frontend-app"
-      ],
-      "env": {
-        "AUTH_TOKEN": "YOUR_API_KEY"
-      }
+      ]
     },
     "backend-qna": {
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://tools.trysita.com/sse",
-        "--header",
-        "Authorization: Bearer ${AUTH_TOKEN}",
+        "http://localhost:3000/api/mcp",
         "--header",
         "x-repo-id: backend-api"
-      ],
-      "env": {
-        "AUTH_TOKEN": "YOUR_API_KEY"
-      }
+      ]
     },
     "mobile-qna": {
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://tools.trysita.com/sse",
-        "--header",
-        "Authorization: Bearer ${AUTH_TOKEN}",
+        "http://localhost:3000/api/mcp",
         "--header",
         "x-repo-id: mobile-app"
-      ],
-      "env": {
-        "AUTH_TOKEN": "YOUR_API_KEY"
-      }
+      ]
     }
   }
 }

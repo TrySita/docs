@@ -12,12 +12,13 @@ Run this command to add the Sita MCP server:
 
 ```bash
 gemini mcp add \
-  --transport sse \
+  --transport http \
   code-qna \
-  https://tools.trysita.com/sse \
-  --header "Authorization: Bearer YOUR_API_KEY" \
+  http://localhost:3000/api/mcp \
   --header "x-repo-id: YOUR_REPO_ID"
 ```
+
+Replace `YOUR_REPO_ID` with your repository ID. The repo id can be copied from the codebases.
 
 ### Multiple Repositories
 
@@ -26,26 +27,23 @@ Add each repository with a unique name:
 ```bash
 # Frontend repository
 gemini mcp add \
-  --transport sse \
+  --transport http \
   frontend-qna \
-  https://tools.trysita.com/sse \
-  --header "Authorization: Bearer YOUR_API_KEY" \
+  http://localhost:3000/api/mcp \
   --header "x-repo-id: frontend"
 
 # Backend repository
 gemini mcp add \
-  --transport sse \
+  --transport http \
   backend-qna \
-  https://tools.trysita.com/sse \
-  --header "Authorization: Bearer YOUR_API_KEY" \
+  http://localhost:3000/api/mcp \
   --header "x-repo-id: backend"
 
 # Mobile repository
 gemini mcp add \
-  --transport sse \
+  --transport http \
   mobile-qna \
-  https://tools.trysita.com/sse \
-  --header "Authorization: Bearer YOUR_API_KEY" \
+  http://localhost:3000/api/mcp \
   --header "x-repo-id: mobile"
 ```
 

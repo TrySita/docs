@@ -19,14 +19,13 @@ Run this command in your terminal to add the Sita MCP server:
 claude mcp add \
   --transport http \
   code-qna \
-  https://tools.trysita.com/mcp \
-  --header "Authorization: Bearer YOUR_API_KEY" \
+  http://localhost:3000/api/mcp \
   --header "x-repo-id: YOUR_REPO_ID"
 ```
 
 <Note>
-  Replace `YOUR_API_KEY` with your actual Sita API key and `YOUR_REPO_ID` with
-  your repository identifier.
+  Replace `YOUR_REPO_ID` with your repository ID. The repo id can be copied
+  from the codebases.
 </Note>
 
 ## Multiple Repository Setup
@@ -38,16 +37,14 @@ To add multiple repositories, run the command for each with different names and 
 claude mcp add \
   --transport http \
   frontend-qna \
-  https://tools.trysita.com/mcp \
-  --header "Authorization: Bearer YOUR_API_KEY" \
+  http://localhost:3000/api/mcp \
   --header "x-repo-id: frontend-app"
 
 # Backend repository
 claude mcp add \
   --transport http \
   backend-qna \
-  https://tools.trysita.com/mcp \
-  --header "Authorization: Bearer YOUR_API_KEY" \
+  http://localhost:3000/api/mcp \
   --header "x-repo-id: backend-api"
 ```
 

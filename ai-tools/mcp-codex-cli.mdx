@@ -52,9 +52,7 @@ command = "npx"
 args = [
   "-y",
   "mcp-remote",
-  "https://tools.trysita.com/sse",
-  "--header",
-  "Authorization: Bearer YOUR_API_KEY",
+  "http://localhost:3000/api/mcp",
   "--header",
   "x-repo-id: YOUR_REPO_ID"
 ]
@@ -62,8 +60,8 @@ env = { "NODE_ENV" = "production" }
 ```
 
 <Note>
-  Replace `YOUR_API_KEY` with your actual Sita API key and `YOUR_REPO_ID` with
-  your repository identifier.
+  Replace `YOUR_REPO_ID` with your repository ID. The repo id can be copied
+  from the codebases.
 </Note>
 
 ## Multiple Repository Configuration
@@ -76,9 +74,7 @@ command = "npx"
 args = [
   "-y",
   "mcp-remote",
-  "https://tools.trysita.com/sse",
-  "--header",
-  "Authorization: Bearer YOUR_API_KEY",
+  "http://localhost:3000/api/mcp",
   "--header",
   "x-repo-id: frontend-app"
 ]
@@ -88,9 +84,7 @@ command = "npx"
 args = [
   "-y",
   "mcp-remote",
-  "https://tools.trysita.com/sse",
-  "--header",
-  "Authorization: Bearer YOUR_API_KEY",
+  "http://localhost:3000/api/mcp",
   "--header",
   "x-repo-id: backend-api"
 ]
@@ -100,9 +94,7 @@ command = "npx"
 args = [
   "-y",
   "mcp-remote",
-  "https://tools.trysita.com/sse",
-  "--header",
-  "Authorization: Bearer YOUR_API_KEY",
+  "http://localhost:3000/api/mcp",
   "--header",
   "x-repo-id: mobile-app"
 ]
@@ -115,7 +107,7 @@ args = [
 
 ## Using Environment Variables
 
-For better security, you can use environment variables with the env field:
+You can use an environment variable for the repo ID with the env field:
 
 ```toml
 [mcp_servers.sita-qna]
@@ -123,13 +115,11 @@ command = "npx"
 args = [
   "-y",
   "mcp-remote",
-  "https://tools.trysita.com/sse",
-  "--header",
-  "Authorization: Bearer ${SITA_API_KEY}",
+  "http://localhost:3000/api/mcp",
   "--header",
   "x-repo-id: ${REPO_ID}"
 ]
-env = { "SITA_API_KEY" = "your_api_key_here", "REPO_ID" = "your_repo_id" }
+env = { "REPO_ID" = "your_repo_id" }
 ```
 
 ## Create Configuration via Command Line
@@ -143,16 +133,14 @@ command = "npx"
 args = [
   "-y",
   "mcp-remote",
-  "https://tools.trysita.com/sse",
-  "--header",
-  "Authorization: Bearer YOUR_API_KEY",
+  "http://localhost:3000/api/mcp",
   "--header",
   "x-repo-id: YOUR_REPO_ID"
 ]
 EOF
 ```
 
-Then edit the file to add your actual API key and repository ID:
+Then edit the file to add your actual repository ID:
 
 ```bash
 nano ~/.codex/config.toml
